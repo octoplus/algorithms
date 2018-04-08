@@ -14,6 +14,7 @@ int main()
     int m = n + 2;
     int f[n + 1][m + 1];
     f[0][0] = 1;
+    cout << f[0][0] << endl;
     for (int i = 1; i <= n; i++)
     {
         f[i][0] = 1;
