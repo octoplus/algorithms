@@ -18,6 +18,7 @@ void counting_sort(int a[], int n, int k)
     }
     for (int i = n - 1; i >= 0; i--)
     {
+        // 注意下标要减一
         a[c[b[i]]-1] = b[i];
         c[b[i]]--;
     }
