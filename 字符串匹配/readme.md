@@ -138,3 +138,68 @@ abaa
 aabaaac
 -1 -1 1 -1 -1 2 2
 
+### 最长前后重叠子串
+
+问题描述：给定两个字符串s1、s2，求s1与s2首尾重叠最长是多少，即求最长的s1的后缀=s2的前缀，或者s1的前缀=s2的后缀。（电信笔试）
+
+#### 暴力解法
+固定重叠子串长度，验证是否满足，如果满足增加长度，继续验证，直到不满足
+
+暴力解法的复杂度是O(n*m)
+
+#### kmp
+
+用kmp的思想，next数组会包含匹配失败位置的最长前后缀。先用s1当做模式串，构造next数组，去匹配s2，在s2返回的k就是最长的重叠前后缀；s2当做模式串进行相同的操作，选取两次结果较大的。复杂度O(max{m,n}}
+
+代码文件lcps.cc(longest common prefix sufix)
+
+### 最长重复子串
+
+longest repeative substring
+
+解法：后缀树
+
+https://www.geeksforgeeks.org/suffix-tree-application-3-longest-repeated-substring/
+
+http://pythonexample.com/code/longest-repeated-substring-python/
+
+``` python
+import sys
+
+s=sys.stdin.readlines()[0]
+
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.children = {}
+        self.indexes = []
+         
+def method1(str):
+    def insert(root, str, index, original_suffix, level=0):
+        root.indexes.append(index)
+        # update the result if find more than two child in a 
+        # node and longer than the result now
+        if(len(root.indexes) > 1 and maxLen[0] < level):
+            maxLen[0] = level
+            maxStr[0] = original_suffix[0:level]
+        if not str:
+            return None
+ 
+        if(str[0] not in root.children):
+            child = Node(str[0])
+            root.children[str[0]] = child
+        else:
+            child = root.children[str[0]]
+        insert(child, str[1:], index, original_suffix, level+1)
+        return None
+    maxLen = [0]
+    maxStr = ['']
+    root = Node('@')
+    for i in range(len(str)):
+        s = str[i:]
+        insert(root, s, i, s)
+    print maxStr[0],maxLen[0]
+
+method1(s)
+```
+
